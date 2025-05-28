@@ -9,9 +9,9 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "MyDatabase", "MyDatabase\My
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MyWebsite", "MyWebsite", "{E008D699-FC79-47AF-89CB-AB1FBDB74F05}"
 	ProjectSection(SolutionItems) = preProject
-		Calculator.html = Calculator.html
-		scripts.js = scripts.js
-		styles.css = styles.css
+		MyWebsite\Calculator.html = MyWebsite\Calculator.html
+		MyWebsite\scripts.js = MyWebsite\scripts.js
+		MyWebsite\styles.css = MyWebsite\styles.css
 	EndProjectSection
 EndProject
 Global

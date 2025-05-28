@@ -62,7 +62,10 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Products.sql" />
-    <Build Include="Tables\Stock.sql" />
+    <Build Include="Tables\Inventory.sql" />
     <Build Include="Tables\Prices.sql" />
+    <Build Include="Stored Procedures\InventoryUsp.sql" />
+    <Build Include="Stored Procedures\PricesUsp.sql" />
+    <Build Include="Stored Procedures\ProductsUsp.sql" />
   </ItemGroup>
 </Project>
