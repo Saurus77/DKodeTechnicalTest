@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Validations;
+using MyApi.Services;
 
 namespace MyApi.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class WarehouseController : ControllerBase
     {
         [HttpGet]
@@ -13,7 +15,7 @@ namespace MyApi.Controllers
             return Ok();
         }
 
-        [HttpGet]
+        [HttpGet("{sku}")]
         public IActionResult Get(string sku)
         {
             return Ok();

@@ -10,6 +10,7 @@
 	[MainCategory] NVARCHAR(100) NOT NULL, /* May contain lanugage specific special characters -> nvarchar */
 	[SubCategory] NVARCHAR(100) NOT NULL, /* May contain lanugage specific special characters -> nvarchar */
 	[ChildCategory] NVARCHAR(100) NOT NULL, /* May contain lanugage specific special characters -> nvarchar */
+	[IsWire] BIT NOT NULL,
 	[Shipping] VARCHAR(20) NOT NULL,
 	[PackageSize] NVARCHAR(50) NOT NULL, /* May contain lanugage specific special characters -> nvarchar */
 	[Available] BIT NOT NULL,
