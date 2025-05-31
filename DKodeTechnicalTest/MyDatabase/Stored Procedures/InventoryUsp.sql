@@ -27,6 +27,7 @@ BEGIN
 	ELSE
 		BEGIN
 			INSERT INTO Inventory  (
+				[ProductID],
 				[SKU],
 				[Unit],
 				[StockQuantity],
@@ -35,6 +36,7 @@ BEGIN
 				[Shipping],
 				[ShippingCost]
 			) VALUES (
+				@ProductID,
 				@SKU,
 				@Unit,
 				@StockQuantity,
