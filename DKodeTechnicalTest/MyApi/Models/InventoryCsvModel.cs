@@ -6,6 +6,9 @@ using MyApi.Helpers;
 
 namespace MyApi.Models
 {
+    /// <summary>
+    /// Class to represent inventory table data model
+    /// </summary>
     public class InventoryCsvModel
     {
   
@@ -15,7 +18,9 @@ namespace MyApi.Models
         public string Shipping { get; set; }
 
     }
-
+    /// <summary>
+    /// Class to define mapping between model fields and actual csv columns
+    /// </summary>
     public sealed class InventoryCsvMap : ClassMap<InventoryCsvModel>
     {
         public InventoryCsvMap()

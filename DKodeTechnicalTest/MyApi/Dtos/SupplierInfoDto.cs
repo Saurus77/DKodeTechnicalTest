@@ -1,5 +1,7 @@
 ﻿namespace MyApi.Dtos
 {
+    // DTO class for supplier info
+    // Field names match with names used in sql string from supplier info repo
     public class SupplierInfoDto
     {
         public string SupplierName { get; set; }

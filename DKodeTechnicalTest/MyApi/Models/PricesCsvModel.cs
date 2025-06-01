@@ -6,6 +6,9 @@ using MyApi.Helpers;
 
 namespace MyApi.Models
 {
+    /// <summary>
+    /// Class to represent prices table data model
+    /// </summary>
     public class PricesCsvModel
     {
 
@@ -16,6 +19,9 @@ namespace MyApi.Models
 
     }
 
+    /// <summary>
+    /// Class to define mapping between model fields and actual csv columns
+    /// </summary>
     public sealed class PricesCsvMap : ClassMap<PricesCsvModel>
     {
         public PricesCsvMap()

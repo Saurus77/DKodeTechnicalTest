@@ -2,6 +2,9 @@
 
 namespace MyApi.Models
 {
+    /// <summary>
+    /// Class to represent products table data model
+    /// </summary>
     public class ProductCsvModel
     {
         public string ID { get; set; }
@@ -24,6 +27,9 @@ namespace MyApi.Models
         public string DefaultImage { get; set; }
     }
 
+    /// <summary>
+    /// Class to define mapping between model fields and actual csv columns
+    /// </summary>
     public sealed class ProductCsvMap : ClassMap<ProductCsvModel>
     {
         public ProductCsvMap()

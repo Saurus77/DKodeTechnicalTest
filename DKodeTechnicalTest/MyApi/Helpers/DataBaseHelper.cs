@@ -23,10 +23,11 @@ namespace MyApi.Helpers
             return new SqlConnection(_connectionString);
         }
 
-        // Executes usp asynchronously using dapper
-        // Params:
-        // - uspName: name of procedure
-        // - parameters: object containing params for usp
+        /// <summary>
+        /// Executes usp asynchronously using dapper
+        /// </summary>
+        /// <param name="uspName">name of procedure</param>
+        /// <param name="parameters">object containing params for usp</param>
         public async Task ExecuteUserStoredProcedureAsync(string uspName, object parameters)
         {
             // New db connection
@@ -35,15 +36,16 @@ namespace MyApi.Helpers
             await connection.ExecuteAsync(uspName, parameters, commandType: CommandType.StoredProcedure);
         }
 
-        // Executes sql query and returns first value or default value
-        // Params:
-        // - sql: query to exectue
-        // - parameters: obj. containing params for query
-        // Generic type T for auto result type handling
-        public async Task<T> QueryFirstResultOrDefaultAsync<T>(string sql, object parameters)
-        {
-            using var connection = CreateConnection();
-            return await connection.QueryFirstOrDefaultAsync<T>(sql, parameters);
-        }
+        /// <summary>
+        /// Executes sql query and returns first value or default value
+        /// </summary>
+        /// <typeparam name="T">Generic type for auto result handling</typeparam>
+        /// <param name="sql">query to exectue</param>
+        /// <param name="parameters">obj. containing params for query</param>
+        //public async Task<T> QueryFirstResultOrDefaultAsync<T>(string sql, object parameters)
+        //{
+        //    using var connection = CreateConnection();
+        //    return await connection.QueryFirstOrDefaultAsync<T>(sql, parameters);
+        //}
     }
 }
