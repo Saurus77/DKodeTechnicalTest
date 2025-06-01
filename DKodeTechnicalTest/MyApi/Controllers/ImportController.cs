@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyApi.Helpers;
 using MyApi.Services;
-using System.Net.Http;
 
 namespace MyApi.Controllers
 {
@@ -27,6 +25,7 @@ namespace MyApi.Controllers
             {
                 await _csvDataService.ProcessProductsCsvAsync(productsCsvUrl);
                 await _csvDataService.ProcessInventoryCsvAsync(inventoryCsvUrl);
+                await _csvDataService.ProcessPricesCsvAsync(pricesCsvUrl);
 
                 return Ok(new { message = "CSV import successful" });
             }

@@ -11,14 +11,8 @@ namespace MyApi.Helpers
         {
             if (string.IsNullOrWhiteSpace(text)) return 0;
 
-            text = text.Replace(".", "");
-
-            if (int.TryParse(text, System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture, out var result))
-            {
-                return result;
-            }
-
-            return 0;
+            text = text.Trim().Replace(".", "").Replace(",", ".");
+            return decimal.Parse(text, CultureInfo.InvariantCulture);
         }
 
     }

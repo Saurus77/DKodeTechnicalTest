@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[usp_UpsertProducts]
-	@ID INT,
+	@ID VARCHAR(50),
 	@SKU VARCHAR(50),
 	@Name NVARCHAR(255),
 	@EAN VARCHAR(50),

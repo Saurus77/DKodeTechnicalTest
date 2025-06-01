@@ -6,5 +6,6 @@ namespace MyApi.Repositories
     {
         Task BulkInsertOrUpdateProductsAsync(IEnumerable<ProductCsvModel> productsCsvModel);
         Task BulkInsertOrUpdateInventoryAsync(IEnumerable<InventoryCsvModel> inventoryCsvModel);
+        Task BulkInsertOrUpdatePricesAsync(IEnumerable<PricesCsvModel> pricesCsvModel);
     }
 }

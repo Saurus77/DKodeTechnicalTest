@@ -1,9 +1,7 @@
 ﻿CREATE TABLE [dbo].[Prices]
 (
-	[ProductID] INT UNIQUE PRIMARY KEY NOT NULL,
+	[ProductID] VARCHAR(50) UNIQUE PRIMARY KEY NOT NULL,
 	[SKU] VARCHAR(50) UNIQUE NOT NULL,
-	[NetPrice] DECIMAL(10,2) NOT NULL,
-	[DiscountNetPrice] DECIMAL(10,2) NOT NULL,
-	[VAT] TINYINT NOT NULL,
-	[LogisticDiscountNetPrice] DECIMAL(10,2) NOT NULL
+	[DiscountNetPrice] DECIMAL(10,2) NULL,
+	[LogisticDiscountNetPrice] DECIMAL(10,2) NULL
 );

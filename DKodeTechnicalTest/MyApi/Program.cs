@@ -11,7 +11,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IWarehouseRepository, WarehouseRepository>();
+builder.Services.AddScoped<ISupplierInfoRepository, SupplierInfoRepository>();
 builder.Services.AddScoped<CsvDataService>();
+builder.Services.AddSingleton<PrepCsvService>();
+
 
 var app = builder.Build();
 

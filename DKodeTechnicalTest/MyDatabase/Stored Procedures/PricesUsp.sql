@@ -1,9 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[usp_UpsertPrices]
-	@ProductID INT,
+	@ProductID VARCHAR(50),
 	@SKU VARCHAR(50),
-	@NetPrice DECIMAL(10,2),
 	@DiscountNetPrice DECIMAL(10,2),
-	@VAT TINYINT,
 	@LogisticDiscountNetPrice DECIMAL(10,2)
 AS
 BEGIN
@@ -14,9 +12,7 @@ BEGIN
 			UPDATE Prices
 			SET
 				[SKU] = @SKU,
-				[NetPrice] = @NetPrice,
 				[DiscountNetPrice] = @DiscountNetPrice,
-				[VAT] = @VAT,
 				[LogisticDiscountNetPrice] = @LogisticDiscountNetPrice
 			WHERE ProductID = @ProductID;
 		END
@@ -25,16 +21,12 @@ BEGIN
 			INSERT INTO Prices (
 				[ProductID],
 				[SKU],
-				[NetPrice],
 				[DiscountNetPrice],
-				[VAT],
 				[LogisticDiscountNetPrice]
 			) VALUES (
 				@ProductID,
 				@SKU,
-				@NetPrice,
 				@DiscountNetPrice,
-				@VAT,
 				@LogisticDiscountNetPrice
 			);
 		END

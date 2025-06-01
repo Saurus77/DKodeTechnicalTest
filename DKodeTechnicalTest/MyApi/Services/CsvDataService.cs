@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Reflection.PortableExecutable;
+using System.Runtime.CompilerServices;
 using System.Text;
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -13,11 +14,13 @@ namespace MyApi.Services
     {
         private readonly HttpClient _httpClient;
         private readonly IWarehouseRepository _warehouseRepository;
+        private readonly PrepCsvService _prepCsvService;
 
-        public CsvDataService(IHttpClientFactory httpClientFactory, IWarehouseRepository warehouseRepository)
+        public CsvDataService(IHttpClientFactory httpClientFactory, IWarehouseRepository warehouseRepository, PrepCsvService prepCsvService)
         {
             _httpClient = httpClientFactory.CreateClient();
             _warehouseRepository = warehouseRepository;
+            _prepCsvService = prepCsvService;
         }
 
         public async Task<string> DownloadCsvAsync(string url, string localFileName)
@@ -35,63 +38,7 @@ namespace MyApi.Services
         }
 
 
-        public async Task ParseCsvFileWithAutoDecectDelimiterAsync<T, TMap>(string filePath, Func<List<T>, Task> processBatch, int batchSize = 200_000, int maxParallelDegree = 4)
-            where TMap : ClassMap<T>
-        {
-            string[] possibleDelimiters = new[] { ",", ";", "\t" };
 
-            string firstLine;
-
-            using (var reader = new StreamReader(filePath, encoding: Encoding.UTF8))
-            {
-                firstLine = await reader.ReadLineAsync() ?? "";
-            }
-
-            string delimiter = DetectedDelimiter(firstLine, possibleDelimiters);
-
-
-
-            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-            {
-                Delimiter = delimiter,
-                BadDataFound = null,
-                TrimOptions = TrimOptions.Trim,
-                MissingFieldFound = null,
-                HasHeaderRecord = true,
-                Quote = '"',
-                ReadingExceptionOccurred = Ex => { return false; },
-            };
-
-
-            var batch = new List<T>(batchSize);
-            var parallelOptions = new ParallelOptions
-            {
-                MaxDegreeOfParallelism = maxParallelDegree
-            };
-
-            using (var output = new StreamReader(filePath, encoding: Encoding.UTF8)) 
-            using (var csv = new CsvReader(output, config))
-            {
-                csv.Context.RegisterClassMap<TMap>();
-
-                await foreach (var record in csv.GetRecordsAsync<T>())
-                {
-                    batch.Add(record);
-
-                    if(batch.Count >= batchSize)
-                    {
-                        await ParallelProcessing.ProcessBatchWithParallelism(batch, processBatch, parallelOptions);
-                        batch.Clear();
-                        GC.Collect();
-                    }
-                }
-
-                if(batch.Count > 0)
-                {
-                    await ParallelProcessing.ProcessBatchWithParallelism(batch, processBatch, parallelOptions);
-                }
-            }
-        }
 
         public async Task ProcessProductsCsvAsync(string url)
         {
@@ -119,7 +66,8 @@ namespace MyApi.Services
 
             }
 
-            await ParseCsvFileWithAutoDecectDelimiterAsync<ProductCsvModel, ProductCsvMap>(
+ 
+            await _prepCsvService.ParseCsvFileWithAutoDecectDelimiterAsync<ProductCsvModel, ProductCsvMap>(
                 filePath: filePath,
                 processBatch: ProcessBatch
                 );
@@ -143,15 +91,30 @@ namespace MyApi.Services
 
             }
 
-            await ParseCsvFileWithAutoDecectDelimiterAsync<InventoryCsvModel, InventoryCsvMap>(
+            await _prepCsvService.ParseCsvFileWithAutoDecectDelimiterAsync<InventoryCsvModel, InventoryCsvMap>(
                 filePath: filePath,
                 processBatch: ProcessBatch
                 );
         }
 
-        private string DetectedDelimiter(string line, string[] delimiters)
+
+        public async Task ProcessPricesCsvAsync(string url)
         {
-            return delimiters.Select(d => new { Delimiter = d, Count = line.Count(c => c == d[0]) }).OrderByDescending(x => x.Count).First().Delimiter;
+            var filePath = await DownloadCsvAsync(url, "Prices.csv");
+            int processedCount = 0;
+
+            async Task ProcessBatch(List<PricesCsvModel> batch)
+            {
+                await _warehouseRepository.BulkInsertOrUpdatePricesAsync(batch);
+
+                processedCount += batch.Count;
+
+            }
+
+            await _prepCsvService.ParseCsvFileWithAutoDecectDelimiterAsync<PricesCsvModel, PricesCsvMap>(
+                filePath: filePath,
+                processBatch: ProcessBatch
+                );
         }
     }
 }
