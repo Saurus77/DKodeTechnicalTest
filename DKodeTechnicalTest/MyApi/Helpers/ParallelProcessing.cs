@@ -28,7 +28,6 @@
             //- async: async delegate to process chunks
             //  - chunk: data collection
             //  - ct: cancellation token
-
             await Parallel.ForEachAsync(chunks, parallelOptions, async (chunk, ct) =>
             {
                 // Convert chunk to list for processing - create list object after enumeration

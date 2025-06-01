@@ -35,17 +35,5 @@ namespace MyApi.Helpers
             // Exec usp
             await connection.ExecuteAsync(uspName, parameters, commandType: CommandType.StoredProcedure);
         }
-
-        /// <summary>
-        /// Executes sql query and returns first value or default value
-        /// </summary>
-        /// <typeparam name="T">Generic type for auto result handling</typeparam>
-        /// <param name="sql">query to exectue</param>
-        /// <param name="parameters">obj. containing params for query</param>
-        //public async Task<T> QueryFirstResultOrDefaultAsync<T>(string sql, object parameters)
-        //{
-        //    using var connection = CreateConnection();
-        //    return await connection.QueryFirstOrDefaultAsync<T>(sql, parameters);
-        //}
     }
 }
